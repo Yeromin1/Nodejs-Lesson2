@@ -3,11 +3,6 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import pinoHttp from 'pino-http';
 
-import {
-  getContactsController,
-  getContactControllerById,
-} from './controllers/contacts.js';
-
 dotenv.config();
 
 export function setupServer() {
@@ -18,10 +13,6 @@ export function setupServer() {
   app.use(cors());
   app.use(pinoHttp());
   app.use(express.json());
-
-  app.get('/contacts', getContactsController);
-
-  app.get('/contacts/:contactId', getContactControllerById);
 
   app.use((req, res) => {
     res.status(404).json({

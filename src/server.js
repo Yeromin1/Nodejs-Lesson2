@@ -3,6 +3,9 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import pinoHttp from 'pino-http';
 
+import { errorHandler } from './middlewares/errorHandler.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
+
 dotenv.config();
 
 export function setupServer() {
@@ -14,11 +17,8 @@ export function setupServer() {
   app.use(pinoHttp());
   app.use(express.json());
 
-  app.use((req, res) => {
-    res.status(404).json({
-      message: 'Not found',
-    });
-  });
+  app.use(notFoundHandler);
+  app.use(errorHandler);
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

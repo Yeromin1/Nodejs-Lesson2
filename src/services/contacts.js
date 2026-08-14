@@ -9,3 +9,8 @@ export const getContactById = async (contactId) => {
   const contacts = await ContactsCollection.findById(contactId);
   return contacts;
 };
+
+export const createContact = async (payload) => {
+  const contact = await ContactsCollection.create(payload);
+  return contact;
+};

@@ -5,6 +5,7 @@ import pinoHttp from 'pino-http';
 
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import contactsRouter from './routers/contacts.js';
 
 dotenv.config();
 
@@ -16,6 +17,8 @@ export function setupServer() {
   app.use(cors());
   app.use(pinoHttp());
   app.use(express.json());
+
+  app.use(contactsRouter);
 
   app.use(notFoundHandler);
   app.use(errorHandler);

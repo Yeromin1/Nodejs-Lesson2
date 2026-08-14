@@ -3,10 +3,9 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import pinoHttp from 'pino-http';
 
-import {
-  getContactsController,
-  getContactControllerById,
-} from './controllers/contacts.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import contactsRouter from './routers/contacts.js';
 
 dotenv.config();
 
@@ -19,15 +18,10 @@ export function setupServer() {
   app.use(pinoHttp());
   app.use(express.json());
 
-  app.get('/contacts', getContactsController);
+  app.use(contactsRouter);
 
-  app.get('/contacts/:contactId', getContactControllerById);
-
-  app.use((req, res) => {
-    res.status(404).json({
-      message: 'Not found',
-    });
-  });
+  app.use(notFoundHandler);
+  app.use(errorHandler);
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

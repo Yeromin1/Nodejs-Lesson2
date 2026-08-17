@@ -8,6 +8,11 @@ import {
 } from '../controllers/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import validateId from '../middlewares/validateId.js';
+import {
+  CreateContactSchema,
+  updateContactSchema,
+} from '../validation/contacts.js';
+import { validateBody } from '../middlewares/validateBody.js';
 
 const router = Router();
 
@@ -19,11 +24,16 @@ router.get(
   ctrlWrapper(getContactControllerById),
 );
 
-router.post('/contacts', ctrlWrapper(createContactController));
+router.post(
+  '/contacts',
+  validateBody(CreateContactSchema),
+  ctrlWrapper(createContactController),
+);
 
 router.patch(
   '/contacts/:contactId',
   validateId,
+  validateBody(updateContactSchema),
   ctrlWrapper(patchContactController),
 );
 

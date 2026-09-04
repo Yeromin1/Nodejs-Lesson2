@@ -7,7 +7,7 @@ import {
   patchContactController,
 } from '../controllers/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import validateId from '../middlewares/validateId.js';
+import validateId from '../middlewares/validateid.js';
 import {
   CreateContactSchema,
   updateContactSchema,
